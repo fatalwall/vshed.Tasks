@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>Peter Varney</authors>
+    <owners>Peter Varney</owners>
+    <licenseUrl>https://github.com/fatalwall/vshed.Tasks/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/fatalwall/vshed.Tasks</projectUrl>
+    <iconUrl>https://github.com/fatalwall/vshed.Tasks/tree/master/src/nugetIcon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Configurable task runner for exteranl calls</description>
+    <releaseNotes>Initial releace v0.0.1</releaseNotes>
+    <copyright>Copyright Peter Varney 2018</copyright>
+    <tags>vshed Tasks</tags>
+  </metadata>
+</package>

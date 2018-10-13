@@ -21,7 +21,7 @@ namespace Example
         static void Main(string[] args)
         {
             vshed.Tasks.Tasks Settings = ConfigurationManager.GetSection("Tasks") as vshed.Tasks.Tasks;
-            Settings.Processes["Confirming Network is Up"].Start();
+            Settings.Processes["ipconfig Success"].Start();
             System.Diagnostics.Debug.WriteLine(String.Format("Processes: {0}", Settings.Processes.Count));
             foreach (var p in Settings.Processes) System.Diagnostics.Debug.WriteLine(String.Format("  {0}", p.ToString()));
             System.Diagnostics.Debug.WriteLine(String.Format("SerialCommands: {0}", Settings.SerialCommands.Count));
