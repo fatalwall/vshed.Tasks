@@ -64,7 +64,7 @@ namespace vshed.Tasks
         }
         #endregion
 
-        public string StandardOutput { get; set; }
+        public string Output { get; set; }
         public int ExitCode { get; set; }
         public bool Successfull { get; set; }
         public string ResultMessage { get; set; }
@@ -83,14 +83,14 @@ namespace vshed.Tasks
             app.StartInfo.CreateNoWindow = true;
             app.Start();
 
-            this.StandardOutput = app.StandardOutput.ReadToEnd();
+            this.Output = app.StandardOutput.ReadToEnd();
             app.WaitForExit();
             this.ExitCode = app.ExitCode;
             if (!String.IsNullOrWhiteSpace(this.SuccessRegex))
             {
                 try
                 {
-                    List<string> status = Regex.Matches(this.StandardOutput, this.SuccessRegex.Replace("\\R", "\r\n"))
+                    List<string> status = Regex.Matches(this.Output, this.SuccessRegex.Replace("\\R", "\r\n"))
                                                         .Cast<Match>()
                                                         .Select(m => m.Value)
                                                         .ToList();
