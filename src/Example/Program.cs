@@ -19,8 +19,8 @@ namespace Example
     class Program
     {
         static void Main(string[] args)
-        {
-            vshed.Tasks.Tasks Settings = ConfigurationManager.GetSection("Tasks") as vshed.Tasks.Tasks;
+        { 
+            vshed.Tasks.Tasks Settings = vshed.Tasks.Tasks.getCurrentInstance;
             Settings.Processes["ipconfig Success"].Start();
             System.Diagnostics.Debug.WriteLine(String.Format("Processes: {0}", Settings.Processes.Count));
             foreach (var p in Settings.Processes) System.Diagnostics.Debug.WriteLine(String.Format("  {0}", p.ToString()));

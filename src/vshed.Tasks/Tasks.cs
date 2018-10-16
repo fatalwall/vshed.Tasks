@@ -14,12 +14,24 @@ using System.Text;
 using System.Configuration;
 
 
-namespace vshed.Tasks 
+namespace vshed.Tasks
 {
 
-    public class Tasks : ConfigurationSection
+    public sealed class Tasks : ConfigurationSection
     {
+        private static readonly Tasks instance = ConfigurationManager.GetSection("Tasks") as vshed.Tasks.Tasks;
 
+        private Tasks()
+        {
+        }
+
+        public static Tasks getCurrentInstance
+        {
+            get
+            {
+                return instance;
+            }
+        }
 
         [ConfigurationProperty(ProcessCollection.XMLDocumentTag, IsDefaultCollection = false)]
         public ProcessCollection Processes
