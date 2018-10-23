@@ -65,19 +65,20 @@ namespace vshed.Tasks
         #endregion
 
         public string Output { get; set; }
-        public int ExitCode { get; set; }
+        public int? ExitCode { get; set; }
         public bool Successfull { get; set; }
         public string ResultMessage { get; set; }
 
         public bool Start()
         {
+            this.Variables.Clear();
             System.Diagnostics.Process app = new System.Diagnostics.Process();
-            app.StartInfo.FileName = this.FileName;
-            app.StartInfo.WorkingDirectory = this.WorkingDirectory;
-            app.StartInfo.Arguments = this.Arguments;
-            app.StartInfo.UserName = this.UserName;
+            app.StartInfo.FileName = vshed.Tasks.Tasks.getCurrentInstance.ExpandVariables(this.FileName);
+            app.StartInfo.WorkingDirectory = vshed.Tasks.Tasks.getCurrentInstance.ExpandVariables(this.WorkingDirectory);
+            app.StartInfo.Arguments = vshed.Tasks.Tasks.getCurrentInstance.ExpandVariables(this.Arguments);
+            app.StartInfo.UserName = vshed.Tasks.Tasks.getCurrentInstance.ExpandVariables(this.UserName);
             app.StartInfo.Password = new System.Security.SecureString();
-            if (!String.IsNullOrWhiteSpace(this.Password)) this.Password.ToList().ForEach(app.StartInfo.Password.AppendChar);
+            if (!String.IsNullOrWhiteSpace(vshed.Tasks.Tasks.getCurrentInstance.ExpandVariables(this.Password))) this.Password.ToList().ForEach(app.StartInfo.Password.AppendChar);
             app.StartInfo.UseShellExecute = false;
             app.StartInfo.RedirectStandardOutput = true;
             app.StartInfo.CreateNoWindow = true;
@@ -90,12 +91,22 @@ namespace vshed.Tasks
             {
                 try
                 {
-                    List<string> status = Regex.Matches(this.Output, this.SuccessRegex.Replace("\\R", "\r\n"))
-                                                        .Cast<Match>()
-                                                        .Select(m => m.Value)
-                                                        .ToList();
-                    if (status.Count() > 0)
+                    Regex regex = new Regex(this.SuccessRegex.Replace("\\R", "\r\n"), RegexOptions.None);
+
+                    MatchCollection matches = regex.Matches(this.Output);
+                    if (matches.Count > 0)
                     {
+                        foreach (string group in regex.GetGroupNames())
+                        {
+                            Dictionary<string, dynamic> d = new Dictionary<string, dynamic>();
+                            foreach (Match m in matches)
+                            {
+                                if (matches.Count == 1) { this.Variables.Add(group, m.Groups[group].Value); }
+                                else { d.Add(d.Count.ToString(), m.Groups[group].Value); }
+                            }
+                            if (matches.Count > 1) { this.Variables.Add(group, d); }
+                        }
+
                         this.ResultMessage="SuccessRegex matched StandardOutput";
                         this.Successfull = true;
                         return true;
@@ -108,8 +119,7 @@ namespace vshed.Tasks
                     }
                 }
                 catch (ArgumentException)
-                {
-                    
+                {   
                     this.ResultMessage = "Argument Exception: Value of SuccessRegex is invalid";
                     this.Successfull = false;
                     return false; //Error with regular expresion

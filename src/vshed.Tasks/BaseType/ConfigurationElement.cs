@@ -7,10 +7,13 @@
  * this file. If not, visit : https://github.com/fatalwall/vshed.Tasks
  */
 
+using System.Collections.Generic;
+
 namespace vshed.Tasks
 {
     public class ConfigurationElement : System.Configuration.ConfigurationElement
     {
+        public  ConfigurationElement() { this.Variables = new Dictionary<string, dynamic>(); }
         public const string XMLDocumentTag = "ConfigurationElement";
 
         [System.Configuration.ConfigurationProperty("Name", IsKey = true, IsRequired = true)]
@@ -24,5 +27,7 @@ namespace vshed.Tasks
         {
             return this.Name;
         }
+   
+        public Dictionary<string, dynamic> Variables { get; set; }
     }
 }

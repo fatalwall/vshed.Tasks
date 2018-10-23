@@ -21,7 +21,7 @@ namespace UnitTest_vshed.Tasks
         {
             try
             {
-                vshed.Tasks.Tasks Settings = ConfigurationManager.GetSection("Tasks") as vshed.Tasks.Tasks;
+                vshed.Tasks.Tasks Settings = vshed.Tasks.Tasks.getCurrentInstance;
                 Settings.Processes["ipconfig Fail"].Start();
                 Assert.IsFalse(Settings.Processes["ipconfig Fail"].Successfull);
             }
@@ -36,7 +36,7 @@ namespace UnitTest_vshed.Tasks
         {
             try
             {
-                vshed.Tasks.Tasks Settings = ConfigurationManager.GetSection("Tasks") as vshed.Tasks.Tasks;
+                vshed.Tasks.Tasks Settings = vshed.Tasks.Tasks.getCurrentInstance;
                 Settings.Processes["ipconfig Success"].Start();
                 Assert.IsTrue(Settings.Processes["ipconfig Success"].Successfull);
             }
@@ -51,7 +51,7 @@ namespace UnitTest_vshed.Tasks
         {
             try
             {
-                vshed.Tasks.Tasks Settings = ConfigurationManager.GetSection("Tasks") as vshed.Tasks.Tasks;
+                vshed.Tasks.Tasks Settings = vshed.Tasks.Tasks.getCurrentInstance;
                 Settings.Processes["Pause"].Start();
                 Assert.IsTrue(Settings.Processes["Pause"].Successfull && Settings.Processes["Pause"].ExitCode == 0);
             }

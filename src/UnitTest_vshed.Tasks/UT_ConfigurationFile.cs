@@ -21,7 +21,7 @@ namespace UnitTest_vshed.Tasks
         {
             try
             {
-                vshed.Tasks.Tasks Settings = ConfigurationManager.GetSection("Tasks") as vshed.Tasks.Tasks;
+                vshed.Tasks.Tasks Settings = vshed.Tasks.Tasks.getCurrentInstance;
                 Assert.IsTrue(Settings.Processes.Count> 0 && Settings.SerialCommands.Count > 0);
             }
             catch (Exception)

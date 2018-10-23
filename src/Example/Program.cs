@@ -26,6 +26,9 @@ namespace Example
             foreach (var p in Settings.Processes) System.Diagnostics.Debug.WriteLine(String.Format("  {0}", p.ToString()));
             System.Diagnostics.Debug.WriteLine(String.Format("SerialCommands: {0}", Settings.SerialCommands.Count));
             foreach (var p in Settings.SerialCommands) System.Diagnostics.Debug.WriteLine(String.Format("  {0}", p.ToString()));
+
+            System.Diagnostics.Debug.WriteLine(Settings.ExpandVariables("Ping Exit Code is: ${ipconfig Success:Property->ExitCode}"));
+            System.Diagnostics.Debug.WriteLine(Settings.ExpandVariables("Ping Exit Code is: ${ipconfig Success:Var->IP}"));
         }
     }
 }

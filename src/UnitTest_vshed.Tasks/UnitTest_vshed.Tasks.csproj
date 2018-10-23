@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UT_ConfigurationFile.cs" />
+    <Compile Include="UT_ExpandVariables.cs" />
     <Compile Include="UT_Process.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
